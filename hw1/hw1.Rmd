@@ -2,8 +2,8 @@
 title: "HW 1"
 subtitle: "Data 180, Professor Kennedy"
 author: 
-  name: "Your Name"
-  email: "XXXX@dickinson.edu"
+  name: "Will Ferris"
+  email: "ferrisw@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
@@ -24,6 +24,12 @@ Go to [datacamp.com](https://datacamp.com) and complete the tutorial "Introducti
 
 ## Task 1
 a) Store the data below in a data frame object named `my_df`.
+```{r}
+head(my_df)
+person = c("Alice", "Bob", "Charlie", "Denise", "Erin", "Frank","Gisele","Harry")
+preference = c("Twitter", "Facebook", "Twitter", "Instagram", "Facebook", "Twitter", "Twitter","Instagram")
+my_df = data.frame(person, preference)
+```
 
 
 |Person | Preference|
@@ -38,24 +44,66 @@ a) Store the data below in a data frame object named `my_df`.
 | Harry | Instagram |
 
 b) What are the dimensions of `my_df`?
-
+- 8 rows and 2 columns
 c) Write R code that counts the total number of users.
+```{r}
+nrow(my_df)
+```
 
 d) Write R code that counts the total number of users who prefer Twitter.
+```{r}
+my_df_twitter <- my_df[my_df$preference=="Twitter",]
+my_df_twitter
+nrow(my_df_twitter)
+```
 
 e) Write R code that returns what Gisele prefers.
+```{r}
+my_df_giselepref <- my_df[my_df$person=="Gisele",2]
+my_df_giselepref
+```
 
 ## Task 2
-a) Create a vector named `my_vec` that includes all integers from 1 to 10 (inclusive).
+## a) Create a vector named `my_vec` that includes all integers from 1 to 10 (inclusive).
+```{r}
+my_vec<-c(1,2,3,4,5,6,7,8,9,10)
+```
 
 b) Replace the second element in `my_vec` with the number `99`.
+```{r}
+my_vec2<-c(1,99,3,4,5,6,7,8,9,10)
+```
 
 c) Write a function called `my_func` that prints `This element is greater than 5!` if an element in `myvec` is greater than 5, and `This element is NOT greater than 5!` otherwise.
+```{r}
+vec1_num<-c("1","2","3","4","5","6","7","8","9","10")
+vec2_num<-c("1","99","3","4","5","6","7","8","9","10")
+names(my_vec)<-vec1_num
+names(my_vec2)<-vec2_num
+my_func <- my_vec > 5:
+  print("This element is greater than 5")
+my_func2 <-my_vec2 >5:
+  print("This element is greater than 5")
+print(my_func)
+print(my_func2)
+else:
+  print("this element is not greater than 5")
+```
 
 ## Task 3
 a. Write a function named `get_fibonacci` that returns the n'th value in the [fibonacci sequence](https://www.mathsisfun.com/numbers/fibonacci-sequence.html). For example, `get_fibonacci(5)` should return 3; `get_fibonacci(7)` should return 8 and so on. ***Hint:** It is possible to call the same function from inside it. E.g., you can call `get_fibonacci()` from inside `get_fibonacci()`. Like inception!*
+```{r}
+fib_vec<-c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229)
+fib_num<-c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30")
+names(fib_vec)<-fib_num
+print(get_fibonacci)
+```
+
 
 b. Using your function in part (a), find and return the 19th value in the fibonacci sequence.
+```{r}
+get_fibonacci(19)
+```
 
 
 <br>
