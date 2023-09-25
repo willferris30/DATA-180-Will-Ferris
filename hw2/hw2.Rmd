@@ -94,7 +94,21 @@ Midsize is the mode because they are the highest on the frequency table at 22.
 ## Task 2 
 a) Create a histogram of the variable `Horsepower`.
 ```{r}
-
+Cars93$Horsepower
+horsepower = c(Cars93$Horsepower)
+hist(horsepower,
+     main = "Horsepower Histogram",
+     xlab = "Horsepower",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     breaks = 50,
+     xlim = range(horsepower),
+     ylim = c(0, max(hist(horsepower)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
+     
 ```
 
 *	Your axes should be labeled
@@ -104,7 +118,19 @@ a) Create a histogram of the variable `Horsepower`.
 
 b) Create a second histogram with breaks at 25 HP increments instead of 50.
 ```{r}
-
+horsepower = c(Cars93$Horsepower)
+hist(horsepower,
+     main = "Horsepower Histogram",
+     xlab = "Horsepower",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     breaks = 25,
+     xlim = range(horsepower),
+     ylim = c(0, max(hist(horsepower)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
 ```
 
 * Use the breaks argument to define the classes
