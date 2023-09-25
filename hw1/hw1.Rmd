@@ -10,6 +10,8 @@ output:
   pdf_document: default
 subtitle: Data 180, Professor Kennedy
 ---
+
+Good job Will. 20/20. 
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
 **Due date:** September 21 beginning of class.
