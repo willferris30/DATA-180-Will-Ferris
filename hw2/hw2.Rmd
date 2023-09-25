@@ -1,9 +1,9 @@
 ---
 title: "HW 2: Visualization, Base R"
 subtitle: "Data 180, Professor Kennedy"
-author: 
-  name: "XXXX"
-  email: "XXXX@dickinson.edu"
+author: Will Ferris
+  name: "Will Ferris"
+  email: "ferrisw@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this line grabs today's date
 output: 
   html_document
