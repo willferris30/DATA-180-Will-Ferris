@@ -71,7 +71,7 @@ print(freq_table)
 *	The plot should include a title using the main argument
 *	The names, labels, and axes sizes (cex parameter) should be set to 1.2
 
-c) Create a pie chart of the variable `Type`.  THE BIGGEST ONE IS DIFFERENT HERE******
+c) Create a pie chart of the variable `Type`. 
 ```{r}
 type = c(Cars93$Type)
 freq_table = table(type)
@@ -146,6 +146,21 @@ c) Which histogram more closely follows or rule of thumb for the suggested numbe
 a) What is the type of variable `Passengers`? (Categorical nominal/ordinal or Numerical discrete/continuous?) What happens if we were to make a histogram for `Passengers`? What is the problem with this graph?
 ```{r}
 
+
+Cars93$Passengers
+passengers = c(Cars93$Passengers)
+hist(passengers,
+     main = "Passengers Histogram",
+     xlab = "Passengers",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     breaks = 15,
+     xlim = range(passengers),
+     ylim = c(0, max(hist(passengers)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
 ```
 
 b) Correct the problem in part (a) by creating a more appropriate visualization. Make sure to label your axes, place a title, choose a custom color as in the previous graphs. (Bonus: use factor() with levels option to display x axis values with no observations on the plot.)
@@ -156,15 +171,32 @@ b) Correct the problem in part (a) by creating a more appropriate visualization.
 ## Task 4 
 a) Make a histogram of the variable `Length` (the default breaks are fine). Other aspects of the plot should be as in part (a) in Task 2.
 ```{r}
-
+Cars93$Length
+length = c(Cars93$Length)
+hist(length,
+     main = "Length Histogram",
+     xlab = "Length",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     breaks = 50,
+     xlim = range(length),
+     ylim = c(0, max(hist(length)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
 ```
 
 b) What is the shape of the distribution?
-
+The distribution is bell shaped.
 
 c) Find the mean and median of the variable `Length.` Do these answers meet your expectations from part (b)?
 ```{r}
-
+length = c(Cars93$Length)
+mean_len = mean(length)
+median_len = median(length)
+print(mean_len)
+print(median_len)
 ```
 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date.
