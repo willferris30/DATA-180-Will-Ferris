@@ -2,8 +2,8 @@
 title: "HW 3: Visualization, Ggplot2 & Maps"
 subtitle: "Data 180, Professor Kennedy"
 author: 
-  name: "XXXX"
-  email: "XXXX@dickinson.edu"
+  name: "Will Ferris"
+  email: "ferrisw@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this line grabs today's date
 output: 
   html_document
@@ -40,7 +40,19 @@ Create a simple scatterplot using ggplot2 where x axis shows `EngineSize`, y axi
 
  
 ```{r}
-
+ggplot(Cars93, aes(x = EngineSize, y = MPG.city)) +
+  
+  # Add points with blue color and size = 2
+  geom_point(color = "blue", size = 2) +
+  xlim(0, max(Cars93$EngineSize) + 1) +
+  ylim(0, max(Cars93$MPG.city) + 5) +
+  labs(
+    title = "Scatterplot of Engine Size vs. MPG City",
+    subtitle = "ggplot2",
+    x = "Engine Size",
+    y = "MPG City",
+    caption = "Data 180 HW 3"
+  )
 ```
 
 ## Task 2
@@ -48,7 +60,18 @@ Recreate the scatterplot in Task 1. Add the following functionality:
 
 * Use a different color for each car `Type`.
 ```{r}
-
+ggplot(Cars93, aes(x = EngineSize, y = MPG.city, color = Type)) +
+  
+  geom_point(size = 2) +
+  xlim(0, max(Cars93$EngineSize) + 1) +
+  ylim(0, max(Cars93$MPG.city) + 5) +
+  labs(
+    title = "Scatterplot of Engine Size vs. MPG City",
+    subtitle = "ggplot2",
+    x = "Engine Size",
+    y = "MPG City",
+    caption = "Data 180 HW 3"
+  )
 ```
 
 ## Task 3
@@ -58,7 +81,19 @@ Recreate the scatterplot in Task 2. Add the following functionality:
 * Make the curve line red, and dashed. (Hint linetype is the option you can use to set line style as 'dashed')
 
 ```{r}
-
+ggplot(Cars93, aes(x = EngineSize, y = MPG.city, color = Type)) +
+  
+  geom_point(size = 2) + 
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed", color = "red") +
+  xlim(0, max(Cars93$EngineSize) + 1) +
+  ylim(0, max(Cars93$MPG.city) + 5) +
+  labs(
+    title = "Scatterplot of Engine Size vs. MPG City",
+    subtitle = "ggplot2",
+    x = "Engine Size",
+    y = "MPG City",
+    caption = "Data 180 HW 3"
+  )
 ```
 
 ## Task 4
@@ -69,7 +104,17 @@ Create a barplot showing count of cars by `AirBags` using ggplot2.
 * Add a title, subtitle, x axis label, y axis label, and a caption using title, subtitle, caption options inside `+ labs()`.
 
 ```{r}
-
+ggplot(Cars93, aes(x = AirBags, fill = AirBags)) +
+  
+  geom_bar() +
+  
+  labs(
+    title = "Barplot of Car Count by AirBags",
+    subtitle = "ggplot2",
+    x = "AirBags",
+    y = "Count",
+    caption = "Data 180 HW 3"
+  )
 ```
 
 ## Task 5
@@ -80,15 +125,25 @@ Recreate the barplot in Task 4 for different car `Origin`, such that you create 
 * in `geom_bar(), use `position='dodge'` to have the barplots side by side.
 
 ```{r}
+ggplot(Cars93, aes(x = Origin, fill = AirBags)) +
 
+  geom_bar(position = 'dodge', stat = 'count') +
+  
+  labs(
+    title = "Grouped Barplot of Car Count by Origin and AirBags",
+    subtitle = "ggplot2",
+    x = "Origin",
+    y = "Count",
+    caption = "Data 180 HW 3"
+  )
 ```
 
 # Maps
 Load Australia's state map data via running:
 ```{r}
 # install the packages below by uncommenting the lines. You need to do this only once.
-#install.packages('ozmaps') # downloads the map needed
-#install.packages('sf') # package used to analyze spatial data
+install.packages('ozmaps') # downloads the map needed
+install.packages('sf') # package used to analyze spatial data
 library(ozmaps)
 library(sf)
 au_states <- ozmaps::ozmap_states # read in spatial dataframe object
@@ -101,7 +156,18 @@ Notice that `NAME` includes the name of a state, `geometry` includes spatial coo
 ## Task 1
 Create a map of Australia using `ggplot2`.
 ```{r}
+install.packages("rnaturalearth")
 
+library(rnaturalearth)
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+australia <- world[world$name == "Australia", ]
+
+ggplot() +
+  geom_sf(data = australia, fill = "lightblue", color = "black") +
+  theme_minimal() +
+  ggtitle("Map of Australia")
 ```
 
 ## Task 2
