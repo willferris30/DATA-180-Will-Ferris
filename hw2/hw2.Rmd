@@ -1,13 +1,14 @@
 ---
 title: "HW 2: Visualization, Base R"
 subtitle: "Data 180, Professor Kennedy"
-author: Will Ferris
-  name: "Will Ferris"
-  email: "ferrisw@dickinson.edu"
+author: "Will Ferris"
+name: "Will Ferris"
+email: "ferrisw@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this line grabs today's date
 output: 
   html_document
 ---
+20/20. Good job will. Very nicely done.
 
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
