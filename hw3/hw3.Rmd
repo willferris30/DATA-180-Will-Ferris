@@ -243,8 +243,8 @@ Now add the new spatial capitals object via + (that is, you can use the followin
 
 ```{r}
 library(mapview)
-capitals_geo
-mapview(au_states) + mapview(col.regions='red', legend = F)
+
+mapview(au_states) + mapview(capitals_geo, col.regions='red', legend=F)
 ```
 
 
