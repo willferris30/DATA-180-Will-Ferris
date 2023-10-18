@@ -8,6 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this 
 output: 
   html_document
 ---
+18/20. Good job.
 
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
@@ -94,6 +95,7 @@ ggplot(Cars93, aes(x = EngineSize, y = MPG.city, color = Type)) +
     y = "MPG City",
     caption = "Data 180 HW 3"
   )
+# Fit a curved line (-2)
 ```
 
 ## Task 4
@@ -142,8 +144,8 @@ ggplot(Cars93, aes(x = Origin, fill = AirBags)) +
 Load Australia's state map data via running:
 ```{r}
 # install the packages below by uncommenting the lines. You need to do this only once.
-install.packages('ozmaps') # downloads the map needed
-install.packages('sf') # package used to analyze spatial data
+#install.packages('ozmaps') # downloads the map needed
+#install.packages('sf') # package used to analyze spatial data
 library(ozmaps)
 library(sf)
 au_states <- ozmaps::ozmap_states # read in spatial dataframe object
@@ -220,7 +222,7 @@ ggplot() +
 Lastly, let's display the same map using `mapview()`. Load the `mapview` package.
 
 ```{r}
-install.packages('mapview') # interactive display
+#install.packages('mapview') # interactive display
 library(mapview)
 ```
 Create an interactive map of Australia using `mapview()`
