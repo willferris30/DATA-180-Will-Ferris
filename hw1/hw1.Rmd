@@ -1,13 +1,17 @@
 ---
 title: "HW 1"
-subtitle: "Data 180, Professor Kennedy"
-author: 
-  name: "Your Name"
-  email: "XXXX@dickinson.edu"
-date: '`r format(Sys.Date(), "%B %d, %Y")`'
-output: 
-  html_document
+author:
+  name: Will Ferris
+  email: ferrisw@dickinson.edu
+date: "`r format(Sys.Date(), "%B %d, %Y")`"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+subtitle: Data 180, Professor Kennedy
 ---
+
+Good job Will. 20/20. 
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
 **Due date:** September 21 beginning of class.
@@ -24,6 +28,12 @@ Go to [datacamp.com](https://datacamp.com) and complete the tutorial "Introducti
 
 ## Task 1
 a) Store the data below in a data frame object named `my_df`.
+```{r}
+head(my_df)
+person = c("Alice", "Bob", "Charlie", "Denise", "Erin", "Frank","Gisele","Harry")
+preference = c("Twitter", "Facebook", "Twitter", "Instagram", "Facebook", "Twitter", "Twitter","Instagram")
+my_df = data.frame(person, preference)
+```
 
 
 |Person | Preference|
@@ -38,24 +48,70 @@ a) Store the data below in a data frame object named `my_df`.
 | Harry | Instagram |
 
 b) What are the dimensions of `my_df`?
-
+- 8 rows and 2 columns
 c) Write R code that counts the total number of users.
+```{r}
+nrow(my_df)
+```
 
 d) Write R code that counts the total number of users who prefer Twitter.
+```{r}
+my_df_twitter <- my_df[my_df$preference=="Twitter",]
+my_df_twitter
+nrow(my_df_twitter)
+```
 
 e) Write R code that returns what Gisele prefers.
+```{r}
+my_df_giselepref <- my_df[my_df$person=="Gisele", 2]
+my_df_giselepref
+```
 
 ## Task 2
-a) Create a vector named `my_vec` that includes all integers from 1 to 10 (inclusive).
+## a) Create a vector named `my_vec` that includes all integers from 1 to 10 (inclusive).
+```{r}
+my_vec<-c(1,2,3,4,5,6,7,8,9,10)
+```
 
 b) Replace the second element in `my_vec` with the number `99`.
+```{r}
+my_vec[2] <- 99
+```
 
 c) Write a function called `my_func` that prints `This element is greater than 5!` if an element in `myvec` is greater than 5, and `This element is NOT greater than 5!` otherwise.
+```{r}
+my_func <- function(my_vec, element) {
+  if (my_vec[element]>5) {
+    print("This element is greater than 5!")
+      }else{
+        print("This element is not greater than 5")
+          
+        }
+      }
+```
 
 ## Task 3
 a. Write a function named `get_fibonacci` that returns the n'th value in the [fibonacci sequence](https://www.mathsisfun.com/numbers/fibonacci-sequence.html). For example, `get_fibonacci(5)` should return 3; `get_fibonacci(7)` should return 8 and so on. ***Hint:** It is possible to call the same function from inside it. E.g., you can call `get_fibonacci()` from inside `get_fibonacci()`. Like inception!*
+```{r}
+get_fibonacci <- function(n) {
+  if (n==1) {
+    return(0)
+  }
+    else if (n==2) {
+      return(1)
+    } else {
+      return(get_fibonacci(n-1) + get_fibonacci(n-2))
+    }
+    
+  }
+  
+```
+
 
 b. Using your function in part (a), find and return the 19th value in the fibonacci sequence.
+```{r}
+get_fibonacci(19)
+```
 
 
 <br>
