@@ -1,13 +1,14 @@
 ---
 title: "HW 2: Visualization, Base R"
 subtitle: "Data 180, Professor Kennedy"
-author: 
-  name: "XXXX"
-  email: "XXXX@dickinson.edu"
+author: "Will Ferris"
+name: "Will Ferris"
+email: "ferrisw@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this line grabs today's date
 output: 
   html_document
 ---
+20/20. Good job will. Very nicely done.
 
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
@@ -37,11 +38,33 @@ head(Cars93)
 ## Task 1
 a) Create a Frequency table and Relative Frequency table (latter uses percentages) for the variable `Type`. Make sure to round all digits to 3 digits.
 ```{r}
-
+type = c(Cars93$Type)
+freq_table = table(type)
+rel_freq_table = prop.table(freq_table)*100
+freq_table = round(freq_table,3)
+rel_freq_table = round(rel_freq_table,3)
+print("Frequency Table: ")
+print(freq_table)
+print("Relative Frequency Table (in percentages): ")
+print(rel_freq_table)
 ```
 b) Create a frequency bar graph for the variable `Type`. You can have count on the y axis.
 ```{r}
-
+type = c(Cars93$Type)
+freq_table = table(type)
+colors = c("red","blue","orange","green","violet","purple")
+barplot(freq_table,
+        main = "Frequency Bar Graph for Type",
+        xlab = "Type",
+        ylab = "Count",
+        col = colors,
+        border = "black",
+        ylim = c(0, max(freq_table) + 1),
+        names.arg = names(freq_table),
+        cex.names = 1.2,
+        cex.axis = 1.2,
+        cex.lab = 1.2)
+print(freq_table)
 ```
 
 *	Your axes should be labeled and legible
@@ -49,9 +72,16 @@ b) Create a frequency bar graph for the variable `Type`. You can have count on t
 *	The plot should include a title using the main argument
 *	The names, labels, and axes sizes (cex parameter) should be set to 1.2
 
-c) Create a pie chart of the variable `Type`.
+c) Create a pie chart of the variable `Type`. 
 ```{r}
-
+type = c(Cars93$Type)
+freq_table = table(type)
+colors = c("red","blue","orange","green","violet","purple")
+pie(freq_table,
+        main = "Pie Chart of Type",
+        col = colors,
+        cex = 1.2)
+print(freq_table)
 ```
 
 * The plot should include a title using the main argument.
@@ -59,11 +89,25 @@ c) Create a pie chart of the variable `Type`.
 
 d) What is the mode of the variable `Type`? Comment.
 
+Midsize is the mode because they are the highest on the frequency table at 22.
 
 ## Task 2 
 a) Create a histogram of the variable `Horsepower`.
 ```{r}
-
+Cars93$Horsepower
+horsepower = c(Cars93$Horsepower)
+hist(horsepower,
+     main = "Horsepower Histogram",
+     xlab = "Horsepower",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     xlim = range(horsepower),
+     ylim = c(0, max(hist(horsepower)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
+     
 ```
 
 *	Your axes should be labeled
@@ -73,7 +117,19 @@ a) Create a histogram of the variable `Horsepower`.
 
 b) Create a second histogram with breaks at 25 HP increments instead of 50.
 ```{r}
-
+horsepower = c(Cars93$Horsepower)
+hist(horsepower,
+     main = "Horsepower Histogram",
+     xlab = "Horsepower",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     breaks = seq(50,300, 25),
+     xlim = range(horsepower),
+     ylim = c(0, max(hist(horsepower)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
 ```
 
 * Use the breaks argument to define the classes
@@ -81,33 +137,83 @@ b) Create a second histogram with breaks at 25 HP increments instead of 50.
 
 c) Which histogram more closely follows or rule of thumb for the suggested number of classes? Explain.
 ```{r}
-
+# Because the rule of thumb is the square root of how many different types there are, the rule of thumb would be sqrt(93) or 9.64. Obviously, this is closer to the second histogram as there are 25 in that one.
 ```
 
 
 ## Task 3 
 a) What is the type of variable `Passengers`? (Categorical nominal/ordinal or Numerical discrete/continuous?) What happens if we were to make a histogram for `Passengers`? What is the problem with this graph?
 ```{r}
+class(Cars93$Passengers) # this is an integer
+# this is numerical discrete because it is numerical/finite and can be counted.
+# the problem with this is that histograms are only for continuous data. We need to transform this into a barplot.
 
+Cars93$Passengers
+passengers = c(Cars93$Passengers)
+hist(passengers,
+     main = "Passengers Histogram",
+     xlab = "Passengers",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     breaks = 15,
+     xlim = range(passengers),
+     ylim = c(0, max(hist(passengers)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
 ```
 
 b) Correct the problem in part (a) by creating a more appropriate visualization. Make sure to label your axes, place a title, choose a custom color as in the previous graphs. (Bonus: use factor() with levels option to display x axis values with no observations on the plot.)
 ```{r}
-
+passengers = c(Cars93$Passengers)
+freq_table = table(factor(passengers, levels = c("2","3","4","5","6","7","8")))
+colors = c("red","blue","orange","green","violet","purple")
+barplot(freq_table,
+        main = "Frequency Bar Graph for Passengers",
+        xlab = "Type",
+        ylab = "Count",
+        col = colors,
+        border = "black",
+        ylim = c(0, max(freq_table) + 1),
+        names.arg = names(freq_table),
+        cex.names = 1.2,
+        cex.axis = 1.2,
+        cex.lab = 1.2)
+print(freq_table)
 ```
 
 ## Task 4 
 a) Make a histogram of the variable `Length` (the default breaks are fine). Other aspects of the plot should be as in part (a) in Task 2.
 ```{r}
-
+Cars93$Length
+length = c(Cars93$Length)
+hist(length,
+     main = "Length Histogram",
+     xlab = "Length",
+     ylab = "Frequency",
+     col = "red",
+     border = "black",
+     breaks = 50,
+     xlim = range(length),
+     ylim = c(0, max(hist(length)$counts) + 1),
+     labels = TRUE)
+par(cex.axis = 1.2, cex.lab = 1.2)
+grid()
 ```
 
 b) What is the shape of the distribution?
-
+The distribution is bell shaped.
 
 c) Find the mean and median of the variable `Length.` Do these answers meet your expectations from part (b)?
 ```{r}
+length = c(Cars93$Length)
+mean_len = mean(length)
+median_len = median(length)
+print(mean_len)
+print(median_len)
 
+# yes because it is bell shaped so the mean, median, and mode will all be similar. (normal distribution)
 ```
 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date.
