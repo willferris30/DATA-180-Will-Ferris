@@ -82,7 +82,7 @@ Continuing with your results in Question 6: Do you notice a trend across years? 
 ```{r, fig.width=10}
 # there does not seem to be any sort of trend, if anything, 2007 and the most recent two years were down years in average time.
 library(ggplot2)
-records %>% group_by(year) %>% summarize(mean=mean(time)) %>% ggplot(aes(year, mean)) + geom_bar(stat='identity')
+records %>% group_by(year) %>% summarize(mean_time=mean(time)) %>% ggplot(aes(year, mean_time)) + geom_bar(stat='identity')
 ```
 
 # Question 8
@@ -99,7 +99,7 @@ records %>% ggplot(., aes(time, fill=type)) + geom_histogram(position = 'identit
 Three Lap time reports the total time spent finishing three laps in total, as opposed to finishing a single lap. Let's divide all time observations with `type=="Three Lap"` by 3 to check whether **per lap** performance declines across Three Lap vs. Single Lap. Generate a new variable named `time_per` which is the time spent per round, and create two overlaid histograms of `type_per` by `type`. Hint: Use `mutate()`, and inside `mutate()` use `ifelse()` function to conditionally replace rows: e.g.., `ifelse(type=="Three Lap",time/3,time)` which divides `time` by three only if `type=="Three Lap"`.
 
 ```{r}
-records %>% mutate(time_per=ifelse(type=="Three Lap", time/3, time)) %>% ggplot(., aes(time_per, fill=type))+geom_histogram(position = 'identity', alpha = .5)
+records %>% mutate(time_per=ifelse(type=="Three Lap", time/3, time)) %>% ggplot(., aes(time_per, fill=type)) + geom_histogram(position = 'identity', alpha = .5)
 ```
 # Question 10
 There appears to be recent discoveries of shortcuts within some of the tracks causing a number of extraordinarily fast records set in `Three Lap` tracks (Have you noticed this in your graph in Question 9?). Replicate your histogram in Question 9 with `shortcut=="No"` filter.
