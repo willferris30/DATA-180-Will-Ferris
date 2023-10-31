@@ -8,7 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
 ---
-
+16/20. 
 **Due date:** October 26 beginning of class.
 
 Let's get some practice with **dplyr**! For this assignment, you will work with Mario Kart data! This data is made available as part of Tidy Tuesday. A codebook is available at https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-05-25.
@@ -83,6 +83,7 @@ Continuing with your results in Question 6: Do you notice a trend across years? 
 # there does not seem to be any sort of trend, if anything, 2007 and the most recent two years were down years in average time.
 library(ggplot2)
 records %>% group_by(year) %>% summarize(mean_time=mean(time)) %>% ggplot(aes(year, mean_time)) + geom_bar(stat='identity')
+# Do you notice a trend across years? Are the record times getting faster, slower, or no clear pattern in time? (-2)
 ```
 
 # Question 8
@@ -93,6 +94,7 @@ Note: Set `alpha=.5` for transparency.
 ```{r}
 # the times for the single lap are much lower and you actually can not even see the pink single lap type past 150 on the x axis
 records %>% ggplot(., aes(time, fill=type)) + geom_histogram(position = 'identity', alpha = .5)
+#How do record times compare between Single Lap and Three Lap tracks? (-1)
 ```
 
 # Question 9
@@ -114,6 +116,7 @@ Lastly, compare the mean `time` by `system_played`. Do you observe a difference 
 ```{r}
 # NTSC has a significantly lower mean. It must be because the FPS are higher meaning you are able to play a smoother game with your best reaction times.
 records %>% group_by(system_played) %>% summarize(mean=mean(time))
+# Do you observe a difference across the two game systems?(-1)
 ```
 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date. (Well... the checkered flag emoji is now super relevant for this assignment!)
