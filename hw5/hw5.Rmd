@@ -8,7 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
 ---
-
+20/20. Very nicely done Will. 
 **Due date:** November 2 beginning of class.
 
 # Question 1
@@ -131,7 +131,7 @@ Using this dendrogram, break these 11 words into five clusters. Call them $C_1 â
 # A = {C_1, C_2}, B = {C_3, C_4}, C = {C_5, C_6}, D = {C_7, C_8, C_9}, E = {C_10, C_11}
 
 # I grouped them together based on how close they looked when I first looked at the dendogram. It was basically dependent on the last attachments to the variables. 
-
+# Dendrogram**
 
 # Question 5
 Let's practice hierarchical clustering with the `vertebrate` dataset that is saved in the hw folder on GitHub. Animals are divided into two categories [vertebrates and invertebrates](https://www.oum.ox.ac.uk/thezone/animals/animalid/divide.htm#:~:text=Invertebrates%20-%20animals%20without%20a%20backbone,a%20vertebrate%20or%20an%20invertebrate.). Vertebrates are also divided within themselves into groups such as mammals, birds, reptiles.. Our task in this question is to identify groups within vertebrates that share similar traits.
@@ -180,7 +180,7 @@ In your dendrograms:
 Bonus: (not required) generate the same dendrogram using the `ggdendro` package.
 
 ```{r}
-install.packages(ggdendro)
+#install.packages(ggdendro)
 library(ggdendro)
 
 ```
