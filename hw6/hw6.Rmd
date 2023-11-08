@@ -88,7 +88,8 @@ MMilk_Agg_K4
 # Question 5
 For the K=3 solution, make a set of boxplots showing the distribution of each variable by cluster membership. In total you should have five graphs (one for each variable in the dataset). Each graph should include three boxplots (one for each cluster). *Hint:* Use `ggplot2` with `geom_boxplot` and create five different ggplot objects. Name them as graph1, graph2,... as below. Finally, use the library named `cowplot` which includes the function `plot_grid()` that enables plotting multiple graphs side by side. See more in the cell below. Make sure to change `eval=F` to `eval=T` in its options when you execute the cell.
 
-```{r, eval=F}
+```{r, eval=T}
+install.packages("cowplot")
 require(cowplot)
 graph1 <- ggplot(Mammals_Milk, aes(x = factor(km_3), y = Water)) + geom_boxplot()
 graph2 <- ggplot(Mammals_Milk, aes(x = factor(km_3), y = Protein)) + geom_boxplot()
@@ -104,7 +105,15 @@ plot_grid(graph1, graph2, graph3, graph4, graph5, labels = "AUTO")
 Create a plot showing how WGSS changes for K = 1 to 8 groups. For each K choice, cluster the mammals based on their standardized milk composition and set the nstart argument to run at 50 at each iteration. Compute and record WGSS. After the loop is done, show the plot of WGSS by number of clusters in your solutions. How many clusters does the elbow plot suggest? How does this compare to your impression from the dendrogram in Question 2?
 
 ```{r}
+wgss = rep(0,8)
+for(i in 1:8){
+  wgss[i] = kmeans(Mammals_Milk_Std, centers = i, nstart = 50)$tot.withinss
+}
 
+ggplot(as.data.frame(wgss), aes(x = 1:8, y = wgss)) + geom_point(size = 2) + geom_line(linetype = "dashed")
+
+# The elbow plot suggests 4 clusters since the slope is much less at x = 4
+# I think this graph lines up with the dendogram from question 2 because if you cut the dendogram at 4, we would break the set into just 3 clusters
 ```
 
 
