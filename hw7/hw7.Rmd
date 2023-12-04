@@ -31,6 +31,7 @@ In this homework, we will analyze news headlines data scraped from abcnews, post
 Read the `news.csv` into R and create the object `news` using
 
 ```{r}
+install.packages('tidyverse')
 library(tidyverse)
 library(tm)
 news<-read.csv("/Users/williamferris/Desktop/DATA-180-Will-Ferris/hw7/news.csv",header=T)
@@ -119,26 +120,38 @@ positivePercent = positivePercent != 0
 positivePercent = wordCounts[positivePercent]
 barplot(positivePercent[positivePercent>20], las = 2, cex.names = 0.75)
 sum(positivePercent)/TotWords
-# this equals 3.7 percent
+# this equals 3.7 percent positive words
+
+negativePercent = match(names(wordCounts), negWords, nomatch = 0)
+negativePercent = negativePercent != 0
+negativePercent = wordCounts[negativePercent]
+barplot(negativePercent[negativePercent>20], las = 2, cex.names = 0.75)
+sum(negativePercent)/TotWords
+# this equals 7.7 percent negative words
+
+Uniquewords = length(wordCounts)
+Uniquewords
 ```
 
 Let's get the number of articles published in each year and month. Note that the chunk below creates two new variables `count` and `yearmonth`:
 
 ```{r}
 news <- news %>% group_by(year,month) %>% mutate(count=n(), yearmonth = paste(year, month,sep = '/')) %>% arrange(year,month,day)
+news
 ```
 
 # Question 9
 Using `ggplot2`, create a barplot for the frequency of articles released in each year and month. On the x axis, you should have year month, e.g., 2003/10, 2003/11, 2003/12, 2004/1, on the y-axis you should have the number of articles released in the data. Do you see a change in the number of articles released across years? (Hint: use `factor()` with `levels=` options specified when you call `aes(x=)` to have a proper chronological sorting on your x axis. Use `+theme(axis.text=element_text(size=4,angle=90)` to fit the dates on the x axis.)
 
 ```{r}
+# the number of articles released significantly declined over the years. in the beginning, there was an average of about 50 and in the middle of the years, there was a peak and massive decline afterwards. the right side of the graph is much lower.
+ggplot(news, aes(x = factor(yearmonth, levels = unique(yearmonth)))) + geom_bar() + theme(axis.text = element_text(size = 4, angle = 90))
 ```
 
 Let's now practice working with `quanteda` and `corpus` packages. Install the packages first if you don't have them in your computer and load them in in R.
 
 ```{r}
 library("quanteda")
-library('corpus')
 ```
 
 # Question 10
@@ -148,29 +161,38 @@ Using the `term_stats()` function, return the 20 most frequent single words that
 * stopwords
 
 ```{r}
-
+head(termFreq(charVector, control = list(removePunctuation = TRUE, stopwords = FALSE)), 20)
 ```
 
 # Question 11
 Repeat the previous question for word pairs (frequency of 2 words that show up, instead of 1 word)
 ```{r}
+head(termFreq(charVector, control = list(removePunctuation = TRUE, stopwords = FALSE)), + c(20))
 ```
 
 # Question 12
 Create a corpus object using `corpus()` function. Store it in an object named `newscorpus`. Convert `newscorpus` into paragraphs with `corpus_reshape()`.
 ```{r}
+newscorpus = corpus(charVector)
+newscorpus = corpus_reshape(paragraphs, to = 'paragraphs')
 ```
 
 # Question 13
 Create a term document matrix named `news_dtm` by using the `dfm()` function. While you call `dfm()`, make sure to clean the paragraphs by keeping only the stems of the words, removing punctuations, removing symbols, removing numbers, and removing stopwords. If you wish to get rid of anything that does not look correct in the data (such as weird bunch of characters that show up as "words") you may trim them out at this stage using `dfm_remove()`. Finally, trim `news_dtm` such that it contains only words that show up at least 50 times. Print the first 6 rows of `news_dtm`. (Note: Again, ignore warnings.)
 ```{r}
+news_dtm = dfm(paragraphs, stem = TRUE, remove_punct = TRUE, remove_symbols = TRUE, remove_numbers = TRUE, remove = c((stopwords('english'))))
+news_dtm = dfm_remove(news_dtm, c('sa', '=', 'abc', 'news', 'qld', 'nt', 'nsw'))
+news_dtm = dfm_trim(news_dtm, min_termfreq = 50)
+head(news_dtm)
 ```
 
 # Question 14
 Create a wordcloud of `news_dtm` using `textplot_wordcloud()`. Comment on words that you were surprised and not surprised to see in the news headlines dataset.
 ```{r}
 library("quanteda.textplots")
+textplot_wordcloud(news_dtm)
 
+# i was surprised with the words "australian', 'australia', 'win', 'school', and 'train' because i did not realize the news or crime that australia seems to be involved in. I was not surprised to see: "police", "fire", 'govt', 'murder', because these are parts of some big headlines that occur often in the world.
 ```
 
 
@@ -179,26 +201,67 @@ Let's now do topic modeling. Make sure to load necessary packages via
 ```{r}
 library("topicmodels")
 library('tidytext')
+install.packages('reshape2')
+library(reshape2)
 ```
 
 # Question 14
 Run the LDA algorithm using k = 8. Store your output in object named `topic_model`. Print the 10 most frequent words that occurred in each 8 topic.
 
 ```{r}
-
+topics = convert(news_dtm, to = 'topicmodels')
+topic_model = LDA(topics, method = "VEM", control = list(seed = 123), k = 8)
+terms(topic_model, 8)
 ```
 
 
 # Question 15
 Plot betas of top 10 words with highest beta for each 8 topic. Comment on 3-4 news headline groups in terms of their topic content.
 ```{r}
+Ttopics = tidy(topic_model,  matrix = 'beta')
+Ttopics
 
+
+Ttopics %>% group_by(topic) %>% summarize(sum_beta = sum(beta))
+
+newsTopTopics = Ttopics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>%
+  ungroup() %>%
+  arrange(topic, -beta)
+
+newsTopTopics %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) + 
+  geom_col(show.legend = FALSE) + 
+  facet_wrap(~topic, scales = 'free') + 
+  scale_y_reordered()
+
+# topic 1 appears to discuss headlines that are about car crashes, involve police, and an interview with the victims
+# topic 2 appears to discuss headlines helping victims with natural weather problems such as tornadoes or floods because of the fund, fire, plan words
+# topic 4 discusses words that seem related to younger people getting in trouble because it involves police, school, report, council, help, and service. Things that do not necessarily run ones life.
 ```
 
 # Question 16
 Plot gammas of top 5 documents with highest gamma for each 8 topic. Return the contents of the 5 documents with highest gamma only for topics 1 and 2. Does it makes sense that these documents are assigned to topics 1 and 2 accordingly? Comment.
 ```{r}
+Tnews = tidy(topic_model, matrix = 'gamma')
+topnews = Tnews %>%
+  group_by(topic) %>%
+  slice_max(gamma, n = 5) %>%
+  ungroup() %>%
+  arrange(document, -gamma)
 
+topnews %>%
+  mutate(document = reorder_within(document, gamma, topic)) %>%
+  ggplot(aes(gamma, document, fill = factor(topic)))+
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~topic, scales = 'free') +
+  scale_y_reordered()
+
+topnews %>% filter(document == 'text9289'|document == 'text4313'|document == 'text3779'|document == 'text248'|document == 'text8953'|document == 'text2213'|document == 'text5940'|document == 'text7190'|document == 'text1309'|document == 'text1194')
+
+# yes this makes sense 
 ```
 
 
