@@ -167,7 +167,25 @@ head(termFreq(charVector, control = list(removePunctuation = TRUE, stopwords = F
 # Question 11
 Repeat the previous question for word pairs (frequency of 2 words that show up, instead of 1 word)
 ```{r}
-head(termFreq(charVector, control = list(removePunctuation = TRUE, stopwords = FALSE)), + c(20))
+filter10 = function(x) {
+  x = tolower(x)
+  x = removePunctuation(x)
+  x = removeNumbers(x)
+  x = removeWords(x, stopwords('en'))
+  x = stripWhitespace(x)
+  return(x)
+} 
+scrapecorp = Corpus(VectorSource(wordCorpus))
+scrapecorp = tm_map(scrapecorp, content_transformer(filter10))
+dtmss = DocumentTermMatrix(scrapecorp)
+termfrequency = colSums(as.matrix(dtmss))
+filteredTS = termfrequency[!(names(termfrequency) %in% stopwords("en"))]
+top20 = head(sort(filteredTS, decreasing = TRUE), 20)
+dtmpair = DocumentTermMatrix(scrapecorp, control = list(tokenize = function(x) ngram(words(x), n = 2)))
+termfrequencypair = colSums(as.matrix(dtmpair))
+filteredTSPair = termfrequencypair[!(names(termfrequencypair) %in% stopwords("en"))]
+top20complete = head(sort(filteredTSPair, decreasing = TRUE), 40)
+top20complete
 ```
 
 # Question 12
