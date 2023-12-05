@@ -55,21 +55,45 @@ mode_credit_age = get_mode(data$credit_age)
 mode_credit_age
 
 # Plot histograms for each of the three variables
-# Histogram for num_card_inq_24_month
-Plot1 = ggplot(data, aes(x = num_card_inq_24_month)) +
+
+# Histogram for num_card_inq_24_month: this is right skewed
+Plot1 = ggplot(ComData, aes(x = num_card_inq_24_month)) +
   geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7) +
   labs(title = "Histogram of num_card_inq_24_month")
 Plot1
 
-# Histogram for tot_amount_currently_past_due
-Plot2 = ggplot(data, aes(x = tot_amount_currently_past_due)) +
+# Histogram for tot_amount_currently_past_due: nothing on the graph
+Plot2 = ggplot(ComData, aes(x = tot_amount_currently_past_due)) +
   geom_histogram(binwidth = 100, fill = "green", color = "black", alpha = 0.7) +
   labs(title = "Histogram of tot_amount_currently_past_due")
 Plot2
 
-# Histogram for credit_age
-Plot3 = ggplot(data, aes(x = credit_age)) +
+# Histogram for credit_age: this is bell shaped
+Plot3 = ggplot(ComData, aes(x = credit_age)) +
   geom_histogram(binwidth = 1, fill = "orange", color = "black", alpha = 0.7) +
   labs(title = "Histogram of credit_age")
 Plot3
-     
+
+# Bar Graph for 'Def_Ind'
+Bar1 = ggplot(ComData, aes(x = Def_ind)) +
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(title = "Bar Graph of Def_Ind", x = "Def_Ind", y = "Count")
+Bar1
+
+# Bar graph for 'rep_education'
+Bar2 = ggplot(ComData, aes(x = rep_education)) +
+  geom_bar(fill = "lightgreen", color = "black") +
+  labs(title = "Bar Graph of rep_education", x = "rep_education", y = "Count")
+Bar2
+
+# Histogram of 'rep_income'
+Plot4 = ggplot(ComData, aes(x = rep_income)) +
+  geom_histogram(binwidth = 10000, fill = "salmon", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of rep_income", x = "rep_income", y = "Frequency")
+Plot4
+
+# Box plot of 'tot_balance'
+Box1 = ggplot(ComData, aes(y = tot_balance)) +
+  geom_boxplot(fill = "skyblue", color = "black") +
+  labs(title = "Boxplot of tot_balance", y = "tot_balance")
+Box1
