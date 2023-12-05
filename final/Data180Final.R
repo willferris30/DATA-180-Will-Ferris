@@ -97,3 +97,18 @@ Box1 = ggplot(ComData, aes(y = tot_balance)) +
   geom_boxplot(fill = "skyblue", color = "black") +
   labs(title = "Boxplot of tot_balance", y = "tot_balance")
 Box1
+
+# 5 number summary of the box plot for 'tot_balance'
+five_number_summary <- summary(ComData$tot_balance)
+five_number_summary
+
+# Outliers using the IQR method
+Q1 = quantile(ComData$tot_balance, 0.25)
+Q3 = quantile(ComData$tot_balance, 0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Outliers 
+outliers = ComData$tot_balance[ComData$tot_balance < lower_bound | ComData$tot_balance > upper_bound]
+outliers
