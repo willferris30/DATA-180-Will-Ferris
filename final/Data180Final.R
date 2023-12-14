@@ -12,7 +12,7 @@ library(ggplot2)
 dataDimensions = dim(data)
 dataDimensions
 
-# Names of the columns : 
+# I can see the names of all the columns using : 
 head(data)
 
 # type of data
@@ -30,7 +30,7 @@ percentage_missing
 # Data with no missing values
 ComData = na.omit(data)
 ComData
-#Dimensions of ComData
+#Dimensions of the complete data (ComData): 
 dim_ComData = dim(ComData)
 dim_ComData
 
@@ -47,11 +47,11 @@ get_mode = function(x) {
   ux[which.max(tabulate(match(x, ux)))]
 }
 
-mode_num_card_inq = get_mode(data$num_card_inq_24_month)
+mode_num_card_inq = get_mode(ComData$num_card_inq_24_month)
 mode_num_card_inq
-mode_tot_amount_past_due = get_mode(data$tot_amount_currently_past_due)
+mode_tot_amount_past_due = get_mode(ComData$tot_amount_currently_past_due)
 mode_tot_amount_past_due
-mode_credit_age = get_mode(data$credit_age)
+mode_credit_age = get_mode(ComData$credit_age)
 mode_credit_age
 
 # Plot histograms for each of the three variables
@@ -64,7 +64,7 @@ Plot1
 
 # Histogram for tot_amount_currently_past_due: nothing on the graph
 Plot2 = ggplot(ComData, aes(x = tot_amount_currently_past_due)) +
-  geom_histogram(binwidth = 100, fill = "green", color = "black", alpha = 0.7) +
+  geom_histogram(binwidth = .5, fill = "green", color = "black", alpha = 0.7) +
   labs(title = "Histogram of tot_amount_currently_past_due")
 Plot2
 
@@ -112,3 +112,4 @@ upper_bound = Q3 + 1.5 * IQR
 # Outliers 
 outliers = ComData$tot_balance[ComData$tot_balance < lower_bound | ComData$tot_balance > upper_bound]
 outliers
+
