@@ -1,3 +1,4 @@
+#40/40. This is very well done Will. Good job. 
 # Set working directory and read the csv file
 setwd("/Users/williamferris/Desktop/DATA-180-Will-Ferris/final")
 data = read.csv("/Users/williamferris/Desktop/DATA-180-Will-Ferris/final/loan_default_data_set.csv")
